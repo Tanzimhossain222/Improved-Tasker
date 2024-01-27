@@ -37,6 +37,10 @@ const taskReducer = (state, action) => {
             return { ...state, isModalOpen: false };
         }
 
+        case "DELETE_ALL_TASKS": {
+            return { ...state, tasks: [] };
+        }
+
 
         default:
             return state;
