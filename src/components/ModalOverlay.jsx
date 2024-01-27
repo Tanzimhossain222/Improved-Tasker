@@ -9,7 +9,7 @@ const ModalOverlay = () => {
     isModalOpen && (
       <>
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-70"></div>
+          <div className="absolute top-0 left-0 w-full h-4/5 bg-black opacity-70"></div>
           <TaskModal />
         </div>
       </>
