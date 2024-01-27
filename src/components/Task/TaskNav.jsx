@@ -1,5 +1,6 @@
 import { useTaskContext } from "../../context/TaskContext";
 import SearchTask from "./SearchTask";
+import { toast } from 'react-toastify';
 
 const TaskNav = () => {
   const { dispatch } = useTaskContext();
@@ -15,6 +16,11 @@ const TaskNav = () => {
 
     if (isConfirmed) {
       dispatch({ type: "DELETE_ALL_TASKS" });
+      toast.error("All tasks deleted successfully", {
+        autoClose: 2400,
+        transition: toast.Slide,
+        position: "top-right",
+      });
     }
   };
 

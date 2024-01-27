@@ -10,7 +10,8 @@ const TaskProvider = ({ children }) => {
   const initialState = {
     tasks: initialTasks,
     searchResults: [],
-    isModalOpen: false,  
+    isModalOpen: false,
+    editTask: null,
   };
 
   const [state, dispatch] = useReducer(taskReducer, initialState);
@@ -23,7 +24,11 @@ const TaskProvider = ({ children }) => {
 };
 
 export const useTaskContext = () => {
-  return useContext(TaskContext);
+  const context = useContext(TaskContext);
+  if (!context) {
+    throw new Error("useTaskContext must be used within a TaskProvider");
+  }
+  return context;
 };
 
 export default TaskProvider;

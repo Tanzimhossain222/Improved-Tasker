@@ -22,7 +22,10 @@ const taskReducer = (state, action) => {
             const searchResults = state.tasks.filter((task) =>
                 task.title.toLowerCase().includes(searchText)
             );
-            return { ...state, searchResults };
+            return {
+                ...state,
+                searchResults: searchResults.length > 0 ? searchResults : [],
+              };
         }
 
         case "CLEAR_SEARCH": {
@@ -44,10 +47,23 @@ const taskReducer = (state, action) => {
         case "TOGGLE_FAVORITE_TASK": {
             const taskId = action.payload;
             const updatedTasks = state.tasks.map((task) =>
-              task.id === taskId ? { ...task, isFav: !task.isFav } : task
+                task.id === taskId ? { ...task, isFav: !task.isFav } : task
             );
             return { ...state, tasks: updatedTasks };
-          }
+        }
+
+        case "SET_EDIT_TASK": {
+            return { ...state, editTask: action.payload };
+        }
+
+        case "EDIT_TASK": {
+            const editedTask = action.payload;
+            const updatedTasks = state.tasks.map((task) =>
+                task.id === editedTask.id ? editedTask : task
+            );
+
+            return { ...state, tasks: updatedTasks, editTask: null };
+        }
 
 
         default:

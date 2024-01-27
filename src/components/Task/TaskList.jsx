@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useTaskContext } from "../../context/TaskContext";
 import StarIcons from "../svgIcons/StarIcons";
 import NoTask from "./NoTask";
@@ -8,7 +9,6 @@ const TaskList = () => {
   const { tasks, searchResults } = state;
   const isSearchActive = searchResults.length > 0;
   const displayData = isSearchActive ? searchResults : tasks;
-  console.log(displayData);
 
   const handleDelete = (id) => {
     const isConfirmed = window.confirm(
@@ -16,11 +16,22 @@ const TaskList = () => {
     );
     if (isConfirmed) {
       dispatch({ type: "DELETE_TASK", payload: id });
+      toast.error("Task deleted successfully", {
+        autoClose: 2000,
+        transition: toast.Slide,
+        position: "bottom-right",
+      });
     }
   };
 
   const handleToggleFavorite = (id) => {
     dispatch({ type: "TOGGLE_FAVORITE_TASK", payload: id });
+  };
+
+  const handleEdit = (event, task) => {
+    event.preventDefault();
+    dispatch({ type: "SET_EDIT_TASK", payload: task });
+    dispatch({ type: "OPEN_MODAL" });
   };
 
   return (
@@ -76,7 +87,12 @@ const TaskList = () => {
                     >
                       Delete
                     </button>
-                    <button className="text-blue-500">Edit</button>
+                    <button
+                      className="text-blue-500"
+                      onClick={(e) => handleEdit(e, task)}
+                    >
+                      Edit
+                    </button>
                   </div>
                 </td>
               </tr>
