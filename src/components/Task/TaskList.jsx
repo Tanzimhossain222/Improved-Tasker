@@ -19,6 +19,10 @@ const TaskList = () => {
     }
   };
 
+  const handleToggleFavorite = (id) => {
+    dispatch({ type: "TOGGLE_FAVORITE_TASK", payload: id });
+  };
+
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto xl:w-full">
@@ -51,7 +55,10 @@ const TaskList = () => {
                 className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
               >
                 <td>
-                  <StarIcons isFav={task.isFav} />
+                  <StarIcons
+                    isFav={task.isFav}
+                    onToggle={() => handleToggleFavorite(task.id)}
+                  />
                 </td>
                 <td>{task.title}</td>
                 <td>

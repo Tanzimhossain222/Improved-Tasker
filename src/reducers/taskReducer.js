@@ -41,6 +41,14 @@ const taskReducer = (state, action) => {
             return { ...state, tasks: [] };
         }
 
+        case "TOGGLE_FAVORITE_TASK": {
+            const taskId = action.payload;
+            const updatedTasks = state.tasks.map((task) =>
+              task.id === taskId ? { ...task, isFav: !task.isFav } : task
+            );
+            return { ...state, tasks: updatedTasks };
+          }
+
 
         default:
             return state;
