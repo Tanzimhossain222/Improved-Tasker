@@ -9,6 +9,8 @@ const TaskProvider = ({ children }) => {
 
   const initialState = {
     tasks: initialTasks,
+    searchResults: [],
+    isModalOpen: false,  
   };
 
   const [state, dispatch] = useReducer(taskReducer, initialState);

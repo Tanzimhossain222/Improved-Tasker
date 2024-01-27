@@ -5,7 +5,10 @@ import TagList from "./TagList";
 
 const TaskList = () => {
   const { state, dispatch } = useTaskContext();
-  const { tasks } = state;
+  const { tasks, searchResults } = state;
+  const isSearchActive = searchResults.length > 0;
+  const displayData = isSearchActive ? searchResults : tasks;
+  console.log(displayData);
 
   const handleDelete = (id) => {
     const isConfirmed = window.confirm(
@@ -41,8 +44,8 @@ const TaskList = () => {
         </thead>
 
         <tbody>
-          {tasks.length > 0 ? (
-            tasks.map((task) => (
+          {displayData.length > 0 ? (
+            displayData.map((task) => (
               <tr
                 key={task.id}
                 className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"

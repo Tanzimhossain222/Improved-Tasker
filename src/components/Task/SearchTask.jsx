@@ -1,7 +1,33 @@
+import { useState } from "react";
+import { useTaskContext } from "../../context/TaskContext";
+
 const SearchTask = () => {
+  const [searchText, setSearchText] = useState("");
+  const { dispatch } = useTaskContext();
+
+  const handleSearch = (text) => {
+    const searchText = text.toLowerCase().trim();
+    if (searchText.length > 0) {
+      dispatch({ type: "SEARCH_TASK", payload: searchText });
+    } else {
+      dispatch({ type: "CLEAR_SEARCH" });
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const text = e.target.value;
+    setSearchText(text);
+    handleSearch(text);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSearch(searchText);
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <div className="flex">
           <div className="relative overflow-hidden rounded-lg text-gray-50 md:min-w-[380px] lg:min-w-[440px]">
             <input
@@ -10,6 +36,8 @@ const SearchTask = () => {
               className="z-20 block w-full bg-gray-800 px-4 py-2 pr-10 focus:outline-none"
               placeholder="Search Task"
               required
+              value={searchText}
+              onChange={handleInputChange}
             />
             <button
               type="submit"
