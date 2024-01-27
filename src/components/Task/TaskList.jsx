@@ -1,8 +1,21 @@
+import { useTaskContext } from "../../context/TaskContext";
 import StarIcons from "../svgIcons/StarIcons";
 import NoTask from "./NoTask";
 import TagList from "./TagList";
 
-const TaskList = ({ tasks }) => {
+const TaskList = () => {
+  const { state, dispatch } = useTaskContext();
+  const { tasks } = state;
+
+  const handleDelete = (id) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+    if (isConfirmed) {
+      dispatch({ type: "DELETE_TASK", payload: id });
+    }
+  };
+
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto xl:w-full">
@@ -47,7 +60,12 @@ const TaskList = ({ tasks }) => {
                 <td className="text-center">{task.priority}</td>
                 <td>
                   <div className="flex items-center justify-center space-x-3">
-                    <button className="text-red-500">Delete</button>
+                    <button
+                      className="text-red-500"
+                      onClick={() => handleDelete(task.id)}
+                    >
+                      Delete
+                    </button>
                     <button className="text-blue-500">Edit</button>
                   </div>
                 </td>
