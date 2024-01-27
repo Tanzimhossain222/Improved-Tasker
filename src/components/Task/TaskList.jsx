@@ -1,7 +1,8 @@
 import StarIcons from "../svgIcons/StarIcons";
+import NoTask from "./NoTask";
 import TagList from "./TagList";
 
-const TaskList = () => {
+const TaskList = ({ tasks }) => {
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto xl:w-full">
@@ -27,28 +28,34 @@ const TaskList = () => {
         </thead>
 
         <tbody>
-          <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
-            <td>
-              <StarIcons />
-            </td>
-            <td>Integration API</td>
-            <td>
-              <div>
-                Connect an existing API to a third-party database using secure
-                methods and handle data exchange efficiently.
-              </div>
-            </td>
-            <td>
-              <TagList />
-            </td>
-            <td className="text-center">High</td>
-            <td>
-              <div className="flex items-center justify-center space-x-3">
-                <button className="text-red-500">Delete</button>
-                <button className="text-blue-500">Edit</button>
-              </div>
-            </td>
-          </tr>
+          {tasks.length > 0 ? (
+            tasks.map((task) => (
+              <tr
+                key={task.id}
+                className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
+              >
+                <td>
+                  <StarIcons isFav={task.isFav} />
+                </td>
+                <td>{task.title}</td>
+                <td>
+                  <div>{task.description}</div>
+                </td>
+                <td>
+                  <TagList tags={task.tags} />
+                </td>
+                <td className="text-center">{task.priority}</td>
+                <td>
+                  <div className="flex items-center justify-center space-x-3">
+                    <button className="text-red-500">Delete</button>
+                    <button className="text-blue-500">Edit</button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <NoTask />
+          )}
         </tbody>
       </table>
     </div>

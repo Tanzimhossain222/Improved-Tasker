@@ -1,7 +1,6 @@
-import React from "react";
 import HeroSection from "./components/HeroSection";
-import Layout from "./layout/Layout";
 import TaskBoard from "./components/Task/TaskBoard";
+import Layout from "./layout/Layout";
 
 const Page = () => {
   return (

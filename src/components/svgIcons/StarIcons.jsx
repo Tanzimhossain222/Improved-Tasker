@@ -1,6 +1,6 @@
 import React from "react";
 
-const StarIcons = ({ fav = true }) => {
+const StarIcons = ({ isFav = true }) => {
   return (
     <>
       <svg
@@ -10,8 +10,8 @@ const StarIcons = ({ fav = true }) => {
         height="24"
         viewBox="0 0 24 24"
         strokeWidth="2"
-        stroke={fav ? "yellow" : "currentColor"}
-        fill={fav ? "yellow" : "none"}
+        stroke={isFav ? "yellow" : "currentColor"}
+        fill={isFav ? "yellow" : "none"}
         strokeLinecap="round"
         strokeLinejoin="round"
       >
