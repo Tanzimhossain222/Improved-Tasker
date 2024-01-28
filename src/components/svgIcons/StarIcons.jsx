@@ -1,4 +1,4 @@
-import React from "react";
+import PropsType from "prop-types";
 
 const StarIcons = ({ isFav, onToggle }) => {
   return (
@@ -21,6 +21,11 @@ const StarIcons = ({ isFav, onToggle }) => {
       </svg>
     </>
   );
+};
+
+StarIcons.propTypes = {
+  isFav: PropsType.bool.isRequired,
+  onToggle: PropsType.func.isRequired,
 };
 
 export default StarIcons;

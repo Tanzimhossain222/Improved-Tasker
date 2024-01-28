@@ -1,7 +1,8 @@
+import PropsType from "prop-types";
 import StarIcons from "../svgIcons/StarIcons";
 import TagList from "./TagList";
 
-const TaskItem = ({ task, onDelete,onToggleFavorite,onEdit  }) => {
+const TaskItem = ({ task, onDelete, onToggleFavorite, onEdit }) => {
   return (
     <>
       <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
@@ -21,16 +22,10 @@ const TaskItem = ({ task, onDelete,onToggleFavorite,onEdit  }) => {
         <td className="text-center">{task.priority}</td>
         <td>
           <div className="flex items-center justify-center space-x-3">
-            <button
-              className="text-red-500"
-              onClick={() => onDelete(task.id)}
-            >
+            <button className="text-red-500" onClick={() => onDelete(task.id)}>
               Delete
             </button>
-            <button
-              className="text-blue-500"
-              onClick={(e) => onEdit(e, task)}
-            >
+            <button className="text-blue-500" onClick={(e) => onEdit(e, task)}>
               Edit
             </button>
           </div>
@@ -38,6 +33,13 @@ const TaskItem = ({ task, onDelete,onToggleFavorite,onEdit  }) => {
       </tr>
     </>
   );
+};
+
+TaskItem.propTypes = {
+  task: PropsType.object.isRequired,
+  onDelete: PropsType.func.isRequired,
+  onToggleFavorite: PropsType.func.isRequired,
+  onEdit: PropsType.func.isRequired,
 };
 
 export default TaskItem;

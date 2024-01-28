@@ -1,3 +1,4 @@
+import PropsType from "prop-types";
 import { createContext, useContext, useReducer } from "react";
 import getTasks from "../data/TaskData";
 import taskReducer from "../reducers/taskReducer";
@@ -12,7 +13,7 @@ const TaskProvider = ({ children }) => {
     searchResults: [],
     isModalOpen: false,
     editTask: null,
-    showNoTaskFound : false,
+    showNoTaskFound: false,
   };
 
   const [state, dispatch] = useReducer(taskReducer, initialState);
@@ -30,6 +31,10 @@ export const useTaskContext = () => {
     throw new Error("useTaskContext must be used within a TaskProvider");
   }
   return context;
+};
+
+TaskProvider.propTypes = {
+  children: PropsType.node.isRequired,
 };
 
 export default TaskProvider;

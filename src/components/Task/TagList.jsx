@@ -1,5 +1,4 @@
-// In TagList.jsx
-
+import PropsType from "prop-types";
 import { getRandomColor } from "../../utils/getColor";
 
 const TagList = ({ tags }) => {
@@ -18,6 +17,10 @@ const TagList = ({ tags }) => {
       </ul>
     </>
   );
+};
+
+TagList.propTypes = {
+  tags: PropsType.array.isRequired,
 };
 
 export default TagList;
