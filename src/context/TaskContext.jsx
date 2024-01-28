@@ -12,6 +12,7 @@ const TaskProvider = ({ children }) => {
     searchResults: [],
     isModalOpen: false,
     editTask: null,
+    showNoTaskFound : false,
   };
 
   const [state, dispatch] = useReducer(taskReducer, initialState);

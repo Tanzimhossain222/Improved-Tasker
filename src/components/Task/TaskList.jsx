@@ -1,14 +1,13 @@
 import { toast } from "react-toastify";
 import { useTaskContext } from "../../context/TaskContext";
-import StarIcons from "../svgIcons/StarIcons";
 import NoTask from "./NoTask";
-import TagList from "./TagList";
+import TaskItem from "./TaskItem";
 
 const TaskList = () => {
   const { state, dispatch } = useTaskContext();
-  const { tasks, searchResults } = state;
-  const isSearchActive = searchResults.length > 0;
-  const displayData = isSearchActive ? searchResults : tasks;
+  const { tasks, searchResults, showNoTaskFound } = state;
+
+  const tasksToRender = searchResults.length > 0 ? searchResults : tasks;
 
   const handleDelete = (id) => {
     const isConfirmed = window.confirm(
@@ -32,6 +31,10 @@ const TaskList = () => {
     event.preventDefault();
     dispatch({ type: "SET_EDIT_TASK", payload: task });
     dispatch({ type: "OPEN_MODAL" });
+  };
+
+  const NoResult = () => {
+    return <NoTask />;
   };
 
   return (
@@ -59,43 +62,17 @@ const TaskList = () => {
         </thead>
 
         <tbody>
-          {displayData.length > 0 ? (
-            displayData.map((task) => (
-              <tr
+          {showNoTaskFound ? (
+            <NoResult />
+          ) : tasksToRender.length > 0 ? (
+            tasksToRender.map((task) => (
+              <TaskItem
                 key={task.id}
-                className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
-              >
-                <td>
-                  <StarIcons
-                    isFav={task.isFav}
-                    onToggle={() => handleToggleFavorite(task.id)}
-                  />
-                </td>
-                <td>{task.title}</td>
-                <td>
-                  <div>{task.description}</div>
-                </td>
-                <td>
-                  <TagList tags={task.tags} />
-                </td>
-                <td className="text-center">{task.priority}</td>
-                <td>
-                  <div className="flex items-center justify-center space-x-3">
-                    <button
-                      className="text-red-500"
-                      onClick={() => handleDelete(task.id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="text-blue-500"
-                      onClick={(e) => handleEdit(e, task)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                task={task}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                onToggleFavorite={handleToggleFavorite}
+              />
             ))
           ) : (
             <NoTask />

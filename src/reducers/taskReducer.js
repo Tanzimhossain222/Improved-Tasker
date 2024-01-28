@@ -18,22 +18,24 @@ const taskReducer = (state, action) => {
         }
 
         case "SEARCH_TASK": {
-            const searchText = action.payload.toLowerCase().trim();
+            const searchText = action.payload.toLowerCase();
             const searchResults = state.tasks.filter((task) =>
                 task.title.toLowerCase().includes(searchText)
             );
+
             return {
                 ...state,
-                searchResults: searchResults.length > 0 ? searchResults : [],
+                searchResults: searchResults,
+                showNoTaskFound: searchResults.length === 0,
               };
         }
 
         case "CLEAR_SEARCH": {
-            return { ...state, searchResults: [] };
+            return { ...state, searchResults: [], showNoTaskFound: false};
         }
 
         case "OPEN_MODAL": {
-            return { ...state, isModalOpen: true };
+            return { ...state, searchResults: []};
         }
 
         case "CLOSE_MODAL": {
