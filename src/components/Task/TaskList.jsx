@@ -28,6 +28,7 @@ const TaskList = () => {
   };
 
   const handleEdit = (event, task) => {
+    console.log(task);
     event.preventDefault();
     dispatch({ type: "SET_EDIT_TASK", payload: task });
     dispatch({ type: "OPEN_MODAL" });

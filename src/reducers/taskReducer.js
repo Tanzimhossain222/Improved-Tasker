@@ -35,7 +35,7 @@ const taskReducer = (state, action) => {
         }
 
         case "OPEN_MODAL": {
-            return { ...state, searchResults: []};
+            return { ...state, isModalOpen: true };
         }
 
         case "CLOSE_MODAL": {
