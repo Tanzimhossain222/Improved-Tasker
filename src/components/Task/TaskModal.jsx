@@ -10,7 +10,7 @@ const TaskModal = () => {
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
-    tags: "",
+    tags: [],
     priority: "",
     id: crypto.randomUUID(),
   });
@@ -23,7 +23,7 @@ const TaskModal = () => {
       editTask || {
         title: "",
         description: "",
-        tags: "",
+        tags: [],
         priority: "",
         id: crypto.randomUUID(),
       }
@@ -48,8 +48,15 @@ const TaskModal = () => {
         setDescriptionValid(value.trim() !== "");
         break;
       case "tags":
-        setTagsValid(value.trim() !== "");
-        value = value.split(",") || [];
+        setTagsValid(
+          value.trim() !== "" &&
+            value
+              .trim()
+              .split(",")
+              .every((tag) => tag.trim() !== "")
+        );
+        value = value.split(",");
+
         break;
       case "priority":
         setPriorityValid(value.trim() !== "");
@@ -66,7 +73,8 @@ const TaskModal = () => {
     // Validation
     const isTitleValid = newTask.title.trim() !== "";
     const isDescriptionValid = newTask.description.trim() !== "";
-    const isTagsValid = newTask.tags.length > 0;
+    const isTagsValid =
+      newTask.tags.length > 0 && newTask.tags.every((tag) => tag.trim() !== "");
     const isPriorityValid = newTask.priority.trim() !== "";
 
     setTitleValid(isTitleValid);
@@ -101,7 +109,7 @@ const TaskModal = () => {
       setNewTask({
         title: "",
         description: "",
-        tags: "",
+        tags: [],
         priority: "",
         id: crypto.randomUUID(),
       });
@@ -113,6 +121,23 @@ const TaskModal = () => {
         autoClose: 4000,
       });
     }
+  };
+
+  const handleCancelEdit = () => {
+    // Clear the editTask in the context
+    dispatch({ type: "SET_EDIT_TASK", payload: null });
+
+    // Reset the local state for newTask
+    setNewTask({
+      title: "",
+      description: "",
+      tags: [],
+      priority: "",
+      id: crypto.randomUUID(),
+    });
+
+    // Close the modal
+    dispatch({ type: "CLOSE_MODAL" });
   };
 
   return (
@@ -204,7 +229,7 @@ const TaskModal = () => {
           <button
             type="button"
             className="rounded bg-red-500 px-4 py-2 text-white ml-4 transition-all hover:opacity-80"
-            onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+            onClick={handleCancelEdit}
           >
             {isEdit ? "Cancel Edit" : "Cancel"}
           </button>

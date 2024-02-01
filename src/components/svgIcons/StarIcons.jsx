@@ -1,6 +1,6 @@
 import PropsType from "prop-types";
 
-const StarIcons = ({ isFav, onToggle }) => {
+const StarIcons = ({ isFav=false, onToggle }) => {
   return (
     <>
       <svg
@@ -24,7 +24,7 @@ const StarIcons = ({ isFav, onToggle }) => {
 };
 
 StarIcons.propTypes = {
-  isFav: PropsType.bool.isRequired,
+  isFav: PropsType.bool,
   onToggle: PropsType.func.isRequired,
 };
 

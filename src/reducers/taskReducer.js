@@ -14,6 +14,7 @@ const taskReducer = (state, action) => {
             return {
                 ...state,
                 tasks: state.tasks.filter((task) => task.id !== action.payload),
+                searchResults: state.searchResults.filter((task) => task.id !== action.payload),
             }
         }
 
@@ -27,11 +28,11 @@ const taskReducer = (state, action) => {
                 ...state,
                 searchResults: searchResults,
                 showNoTaskFound: searchResults.length === 0,
-              };
+            };
         }
 
         case "CLEAR_SEARCH": {
-            return { ...state, searchResults: [], showNoTaskFound: false};
+            return { ...state, searchResults: [], showNoTaskFound: false };
         }
 
         case "OPEN_MODAL": {
@@ -51,7 +52,12 @@ const taskReducer = (state, action) => {
             const updatedTasks = state.tasks.map((task) =>
                 task.id === taskId ? { ...task, isFav: !task.isFav } : task
             );
-            return { ...state, tasks: updatedTasks };
+
+            const updatedSearchResults = state.searchResults.map((task) =>
+                task.id === taskId ? { ...task, isFav: !task.isFav } : task
+            );
+
+            return { ...state, tasks: updatedTasks, searchResults: updatedSearchResults };
         }
 
         case "SET_EDIT_TASK": {
@@ -64,7 +70,10 @@ const taskReducer = (state, action) => {
                 task.id === editedTask.id ? editedTask : task
             );
 
-            return { ...state, tasks: updatedTasks, editTask: null };
+            const updatedSearchResults = state.searchResults.map((task) =>
+                task.id === editedTask.id ? editedTask : task
+            );
+            return { ...state, tasks: updatedTasks, editTask: null, searchResults: updatedSearchResults };
         }
 
 
